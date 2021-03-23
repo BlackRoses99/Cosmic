@@ -67,6 +67,7 @@ class Category {
             'message'   => 'required',
             'guild_id'  => 'required|numeric'
         ]);
+      
 
         if(!$validate->isSuccess()) {
             exit;
@@ -76,8 +77,8 @@ class Category {
             response()->json(["status" => "error", "message" => Locale::get('core/notification/something_wrong')]);
         }
       
-        $slug     = Helper::convertSlug($title);
-        $forums   = Guild::getGuild($cat_id);
+        $slug     = Helper::convertSlug(input('title'));
+        $forums   = Guild::getGuild(input('guild_id'));
       
         if (request()->player === null || empty($forums)) {
             response()->json(["status" => "error", "message" => Locale::get('core/notification/something_wrong')]);
